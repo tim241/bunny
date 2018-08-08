@@ -32,5 +32,8 @@ case $1 in
         command="$1" 
         shift
         "$command" "$@";;
+    # Alternatives :)
+    dig) shift; search "$@";;
+    hop) shift; update "$@";;
     help|*) help;;
 esac
