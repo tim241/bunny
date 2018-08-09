@@ -111,8 +111,12 @@ case "$1" in
         shift
         "$command" "$@";;
     # Alternatives :)
-    dig) shift; search "$@";;
-    hop) shift; update "$@";;
+    dig) 
+        check_sudo "$@";
+        shift; search "$@";;
+    hop) 
+        check_sudo "$@";
+        shift; update "$@";;
     help|*) help;;
 esac
 
