@@ -52,10 +52,21 @@ else
     done
 fi
 
+if [[ -z $BACKEND ]]; then
+    echo "There are no backends compatible with this machine"
+    echo "You can try to make one for your package manager"
+    echo "and submit a pr."
+    exit 2
+fi
+
 case $1 in
     -C|--cache)
-        rm $CACHE/rabbithole
-        echo "cleared cached backend";;
+        if [[ -f $CACHE/rabbithole ]]; then
+            rm $CACHE/rabbithole
+            echo "cleared cached backend"
+        else
+            echo "there were no rabbits hiding in your cache"
+        fi;;
     search|install|\
     remove|update) 
         command="$1" 

@@ -18,7 +18,7 @@ install: bin/bunny
 		"$(destdir)/$(prefix)/bin/bunny"
 	mkdir -p "$(configs)/bunny"
 	cp -r src/backend \
-		"$(configs)/bunny/backend"
+		"$(configs)/bunny/"
 
 clean:
 	rm -rf bin
