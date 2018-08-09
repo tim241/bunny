@@ -1,14 +1,12 @@
 destdir ?= 
 prefix  ?= /usr/local
-backend ?= pacman
+configs ?= /usr/share
 
 bin/%:
 	mkdir -p bin
-	echo "#!/usr/bin/env bash" > "$@"
+	echo "#!/bin/sh" > "$@"
 	cat src/license_header 	   >> "$@"
-	echo "set -e" 	  >> "$@"
-	cat src/backend/$(backend).sh \
-		src/bunny.sh \
+	cat src/bunny.sh \
 		| grep -o '^[^#]*' \
 		>> "$@"
 	chmod +x "$@"
@@ -18,6 +16,9 @@ all: bin/bunny
 install: bin/bunny
 	install -D bin/bunny -m=0755 \
 		"$(destdir)/$(prefix)/bin/bunny"
+	mkdir -p "$(configs)/bunny"
+	cp -r src/backend \
+		"$(configs)/bunny/backend"
 
 clean:
 	rm -rf bin

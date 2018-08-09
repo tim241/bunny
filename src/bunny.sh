@@ -18,7 +18,7 @@
 #
 
 CACHE=$HOME/.cache/bunny
-BACKENDS=./backend
+BACKENDS=/usr/share/bunny/backend
 
 function help()
 {
