@@ -18,7 +18,7 @@
 #
 
 
-cache_dir="${XDG_CACHE_HOME:-$HOME/.cache/bunny}"
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
 pkg_backends="@@BACKEND_PATH@@"
 
 help()
