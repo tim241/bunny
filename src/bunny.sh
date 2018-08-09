@@ -81,9 +81,9 @@ fi
 
 case "$1" in
     clean)
-        if [ -f "$cache_dir/rabbithole" ]
+        if [ -f "$cache_file" ]
         then
-            rm "$cache_dir/rabbithole"
+            rm "$cache_file"
             echo "Shoo rabbits, don't make me get a broom!"
         fi;;
     search|install|\
