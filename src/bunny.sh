@@ -66,6 +66,7 @@ check_sudo()
         else
             sudo "$0" "$@"
         fi
+        exit $?
     fi
 }
 
