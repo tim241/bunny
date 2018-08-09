@@ -16,17 +16,53 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-function help()
+
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
+pkg_backends="@@BACKEND_PATH@@"
+
+help()
 {
     pkg="$(basename "$0")"
-    printf "%s\n%s\n%s\n%s\n" \
+    printf "%s\n%s\n%s\n%s\n%s\n" \
         "$pkg install [package]" \
         "$pkg remove  [package]" \
         "$pkg search  [package]" \
-        "$pkg update"
+        "$pkg update" \
+        "$pkg clean"
 }
 
-case $1 in
+if [ ! -d "$cache_dir" ]; then
+    mkdir -p "$cache_dir"
+fi
+
+if [ -f "$cache_dir/rabbithole" ]; then
+    . "$cache_dir/rabbithole" 
+else
+    for file in "$pkg_backends"/*; do
+        file_name=$(basename "$file")
+        if $(command -v "$file_name" &> /dev/null) && \
+            [ -z "$BACKEND" ]; then
+                cp "${file}" "$cache_dir/rabbithole"
+                . "$file"
+        fi
+    done
+fi
+
+if [ -z "$BACKEND" ]; then
+    printf "%s\n\t%s\n\t%s\n" \
+        "There are no backends compatible with this machine" \
+        "You can try to make one for your package manager" \
+        "and submit a pr."
+    exit 1
+fi
+
+case "$1" in
+    clean)
+        if [ -f "$cache_dir/rabbithole" ]; then
+            rm "$cache_dir/rabbithole"
+            echo "Shoo rabbits, don't make me get a broom!"
+        fi;;
     search|install|\
     remove|update) 
         command="$1" 

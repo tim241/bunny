@@ -5,3 +5,4 @@ A simple shell script wrapper around multiple package managers
 - [x] pacman
 - [x] xbps
 - [x] apt-get
+- [x] pkg/_add

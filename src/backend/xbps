@@ -16,33 +16,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-function pacman()
+BACKEND="xbps"
+
+search()
 {
-    pacman="$(which pacman)"
-    if [ "$UID" = "0" ]
-    then
-        "$pacman" $@
-    else
-        sudo "$pacman" $@
-    fi
+    xbps-query -Rs "$@"
 }
 
-function search()
+install()
 {
-    pacman -Ss "$@"
+    xbps-install -S "$@"
 }
 
-function install()
+remove()
 {
-    pacman -S "$@"
+    xbps-remove "$@"
 }
 
-function remove()
+update()
 {
-    pacman -R "$@"
-}
-
-function update()
-{
-    pacman -Syu
+    xbps-install -Su
 }

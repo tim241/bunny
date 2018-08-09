@@ -16,22 +16,35 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-function search()
+BACKEND="pacman"
+
+pacman_c()
 {
-    apt-cache search "$@"
+    pacman="$(which pacman)"
+    if [ "$UID" = "0" ]
+    then
+        "$pacman" $@
+    else
+        sudo "$pacman" $@
+    fi
 }
 
-function install()
+search()
 {
-    apt-get install "$@"
+    pacman -Ss "$@"
 }
 
-function remove()
+install()
 {
-    apt-get remove "$@"
+    pacman_c -S "$@"
 }
 
-function update()
+remove()
 {
-    apt-get update
+    pacman_c -R "$@"
+}
+
+update()
+{
+    pacman_c -Syu
 }
