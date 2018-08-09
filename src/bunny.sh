@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
 cache_file="$cache_dir/rabbithole"
 
@@ -61,7 +60,12 @@ check_sudo()
     #
     if [ "$UID" != "0" ]
     then
-        sudo "$0" "$@"
+        if command -v doas &> /dev/null
+        then
+            doas "$0" "$@"
+        else
+            sudo "$0" "$@"
+        fi
     fi
 }
 
@@ -72,17 +76,13 @@ fi
 
 backend_found=no
 
-if [ -f "$cache_dir/rabbithole" ] 
+backend_file="$pkg_backends/$(cat "$cache_file" 2> /dev/null)"
+
+if [ -f "$cache_file" ] && \
+    [ -f "$backend_file" ]
 then
-    backend="$(cat "$cache_file")"
-    backend_file="$pkg_backend/$backend"
-    if [ -f "$backend_file" ]
-    then
-        . "$backend_file"
-        backend_found=yes
-    else
-        get_backend
-    fi
+    . "$backend_file"
+    backend_found=yes
 else
     get_backend
 fi
