@@ -41,7 +41,7 @@ if [ -f "$cache_dir/rabbithole" ]; then
 else
     for file in "$pkg_backends"/*; do
         file_name=$(basename "$file")
-        if [ ! -z "$(command -v "$file_name" &> /dev/null)" ] && \
+        if command -v "$file_name" &> /dev/null && \
             [ -z "$BACKEND" ]; then
                 cp "${file}" "$cache_dir/rabbithole"
                 . "$file"
@@ -52,7 +52,7 @@ fi
 if [ -z "$BACKEND" ]; then
     printf "%s\n\t%s\n\t%s" \
         "There are no backends compatible with this machine" \
-        "You can try to make one for your package manager"
+        "You can try to make one for your package manager" \
         "and submit a pr."
     exit 1
 fi
