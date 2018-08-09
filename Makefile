@@ -14,7 +14,7 @@ bin/%:
 all: bin/bunny
 
 install: bin/bunny
-	install -D bin/bunny -m=0755 \
+	install -D bin/bunny \
 		"$(destdir)/$(prefix)/bin/bunny"
 	mkdir -p "$(destdir)/$(prefix)/share/bunny"
 	cp -r src/backend \
