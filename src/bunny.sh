@@ -48,6 +48,23 @@ get_backend()
     done
 }
 
+check_sudo()
+{
+    # Return when just searching for packages
+    #
+    if [ "$1" = "search" ]
+    then
+        return
+    fi
+
+    # Verify that current user is root
+    #
+    if [ "$UID" != "0" ]
+    then
+        sudo "$0" "$@"
+    fi
+}
+
 if [ ! -d "$cache_dir" ]
 then
     mkdir -p "$cache_dir"
@@ -88,6 +105,7 @@ case "$1" in
         fi;;
     search|install|\
     remove|update)
+        check_sudo "$@"
         command="$1" 
         shift
         "$command" "$@";;
