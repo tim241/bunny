@@ -19,7 +19,7 @@
 
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache/bunny}"
-pkg_backends="/usr/share/bunny/backend"
+pkg_backends="/usr/local/share/bunny/backend"
 
 help()
 {
