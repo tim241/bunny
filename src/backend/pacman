@@ -16,19 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-BACKEND="pacman"
-
-pacman_c()
-{
-    pacman="$(which pacman)"
-    if [ "$UID" = "0" ]
-    then
-        "$pacman" $@
-    else
-        sudo "$pacman" $@
-    fi
-}
-
 search()
 {
     pacman -Ss "$@"
@@ -36,15 +23,15 @@ search()
 
 install()
 {
-    pacman_c -S "$@"
+    pacman -S "$@"
 }
 
 remove()
 {
-    pacman_c -R "$@"
+    pacman -R "$@"
 }
 
 update()
 {
-    pacman_c -Syu
+    pacman -Syu
 }

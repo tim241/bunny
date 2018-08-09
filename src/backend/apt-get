@@ -16,24 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-BACKEND="xbps"
-
 search()
 {
-    xbps-query -Rs "$@"
+    apt-cache search "$@"
 }
 
 install()
 {
-    xbps-install -S "$@"
+    apt-get install "$@"
 }
 
 remove()
 {
-    xbps-remove "$@"
+    apt-get remove "$@"
 }
 
 update()
 {
-    xbps-install -Su
+    apt-get update
 }

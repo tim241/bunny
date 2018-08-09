@@ -19,6 +19,8 @@
 
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
+cache_file="$cache_dir/rabbithole"
+
 pkg_backends="@@BACKEND_PATH@@"
 
 help()
@@ -32,24 +34,44 @@ help()
         "$pkg clean"
 }
 
-if [ ! -d "$cache_dir" ]; then
+get_backend()
+{
+    for file in "$pkg_backends"/*
+    do
+        file_name="$(basename "$file")"
+        if command -v "$file_name" &> /dev/null
+        then
+            . "$file"
+            echo "$file_name" > "$cache_file"
+            backend_found=yes
+        fi
+    done
+}
+
+if [ ! -d "$cache_dir" ]
+then
     mkdir -p "$cache_dir"
 fi
 
-if [ -f "$cache_dir/rabbithole" ]; then
-    . "$cache_dir/rabbithole" 
+backend_found=no
+
+if [ -f "$cache_dir/rabbithole" ] 
+then
+    backend="$(cat "$cache_file")"
+    backend_file="$pkg_backend/$backend"
+    if [ -f "$backend_file" ]
+    then
+        . "$backend_file"
+        backend_found=yes
+    else
+        get_backend
+    fi
 else
-    for file in "$pkg_backends"/*; do
-        file_name=$(basename "$file")
-        if $(command -v "$file_name" &> /dev/null) && \
-            [ -z "$BACKEND" ]; then
-                cp "${file}" "$cache_dir/rabbithole"
-                . "$file"
-        fi
-    done
+    get_backend
 fi
 
-if [ -z "$BACKEND" ]; then
+if [ "$backend_found" = "no" ]
+then
     printf "%s\n\t%s\n\t%s\n" \
         "There are no backends compatible with this machine" \
         "You can try to make one for your package manager" \
@@ -59,12 +81,13 @@ fi
 
 case "$1" in
     clean)
-        if [ -f "$cache_dir/rabbithole" ]; then
+        if [ -f "$cache_dir/rabbithole" ]
+        then
             rm "$cache_dir/rabbithole"
             echo "Shoo rabbits, don't make me get a broom!"
         fi;;
     search|install|\
-    remove|update) 
+    remove|update)
         command="$1" 
         shift
         "$command" "$@";;
@@ -73,3 +96,4 @@ case "$1" in
     hop) shift; update "$@";;
     help|*) help;;
 esac
+
