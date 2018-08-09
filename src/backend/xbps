@@ -18,22 +18,22 @@
 #
 BACKEND="xbps"
 
-function search()
+search()
 {
     xbps-query -Rs "$@"
 }
 
-function install()
+install()
 {
     xbps-install -S "$@"
 }
 
-function remove()
+remove()
 {
     xbps-remove "$@"
 }
 
-function update()
+update()
 {
     xbps-install -Su
 }

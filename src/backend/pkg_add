@@ -18,22 +18,22 @@
 #
 BACKEND="pkg_*"
 
-function search()
+search()
 {
     pkg_info -Q "$@"
 }
 
-function install()
+install()
 {
     pkg_add "$@"
 }
 
-function remove()
+remove()
 {
     pkg_delete "$@"
 }
 
-function update()
+update()
 {
     pkg_add -u
 }

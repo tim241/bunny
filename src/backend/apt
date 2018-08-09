@@ -18,22 +18,22 @@
 #
 BACKEND="apt"
 
-function search()
+search()
 {
     apt-cache search "$@"
 }
 
-function install()
+install()
 {
     apt-get install "$@"
 }
 
-function remove()
+remove()
 {
     apt-get remove "$@"
 }
 
-function update()
+update()
 {
     apt-get update
 }

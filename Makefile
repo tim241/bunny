@@ -1,6 +1,5 @@
 destdir ?= 
 prefix  ?= /usr/local
-configs ?= /usr/share
 
 bin/%:
 	mkdir -p bin
@@ -16,9 +15,9 @@ all: bin/bunny
 install: bin/bunny
 	install -D bin/bunny -m=0755 \
 		"$(destdir)/$(prefix)/bin/bunny"
-	mkdir -p "$(configs)/bunny"
+	mkdir -p "$(destdir)/$(prefix)/share/bunny"
 	cp -r src/backend \
-		"$(configs)/bunny/"
+		"$(destdir)/$(prefix)/share/bunny/"
 
 clean:
 	rm -rf bin

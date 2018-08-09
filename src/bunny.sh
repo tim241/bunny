@@ -17,10 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-CACHE=$HOME/.cache/bunny
-BACKENDS=/usr/share/bunny/backend
 
-function help()
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache/bunny}"
+pkg_backends="/usr/share/bunny/backend"
+
+help()
 {
     pkg="$(basename "$0")"
     printf "%s\n%s\n%s\n%s\n%s\n" \
@@ -28,44 +29,39 @@ function help()
         "$pkg remove  [package]" \
         "$pkg search  [package]" \
         "$pkg update" \
-        "$pkg -C --cache"
+        "$pkg clean"
 }
 
-# make sure we have somewhere to put our cache
-if [[ ! -d $CACHE ]]; then
-    mkdir -p $CACHE
+if [ ! -d "$cache_dir" ]; then
+    mkdir -p "$cache_dir"
 fi
 
-# attempt to find our backend
-if [[ -f $CACHE/rabbithole.sh ]]; then
-    source $CACHE/rabbithole 
+if [ -f "$cache_dir/rabbithole" ]; then
+    . "$cache_dir/rabbithole" 
 else
-    for F in $BACKENDS/*; do
-        F_NAME=$(basename "$F")
-        command -v $F_NAME &> /dev/null
-        if [[ "$?" -eq "0" ]]; then
-            if [[ -z $BACKEND ]]; then
-                cp $F $CACHE/rabbithole
-                source $F
-            fi
+    for file in "$pkg_backends"/*; do
+        file_name=$(basename "$file")
+        if [ ! -z "$(command -v "$file_name" &> /dev/null)" ] && \
+            [ -z "$BACKEND" ]; then
+                cp "${file}" "$cache_dir/rabbithole"
+                . "$file"
         fi
     done
 fi
 
-if [[ -z $BACKEND ]]; then
-    echo "There are no backends compatible with this machine"
-    echo "You can try to make one for your package manager"
-    echo "and submit a pr."
-    exit 2
+if [ -z "$BACKEND" ]; then
+    printf "%s\n\t%s\n\t%s" \
+        "There are no backends compatible with this machine" \
+        "You can try to make one for your package manager"
+        "and submit a pr."
+    exit 1
 fi
 
-case $1 in
-    -C|--cache)
-        if [[ -f $CACHE/rabbithole ]]; then
-            rm $CACHE/rabbithole
-            echo "cleared cached backend"
-        else
-            echo "there were no rabbits hiding in your cache"
+case "$1" in
+    clean)
+        if [ -f "$cache_dir/rabbithole" ]; then
+            rm "$cache_dir/rabbithole"
+            echo "Shoo rabbits, don't make me get a broom!"
         fi;;
     search|install|\
     remove|update) 

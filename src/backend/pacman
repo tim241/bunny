@@ -18,7 +18,7 @@
 #
 BACKEND="pacman"
 
-function pacman_c()
+pacman_c()
 {
     pacman="$(which pacman)"
     if [ "$UID" = "0" ]
@@ -29,22 +29,22 @@ function pacman_c()
     fi
 }
 
-function search()
+search()
 {
     pacman -Ss "$@"
 }
 
-function install()
+install()
 {
     pacman_c -S "$@"
 }
 
-function remove()
+remove()
 {
     pacman_c -R "$@"
 }
 
-function update()
+update()
 {
     pacman_c -Syu
 }
