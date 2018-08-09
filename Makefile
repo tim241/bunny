@@ -7,6 +7,7 @@ bin/%:
 	cat src/license_header 	   >> "$@"
 	cat src/bunny.sh \
 		| grep -o '^[^#]*' \
+		| sed "s|@@BACKEND_PATH@@|$(prefix)/share/bunny/backend" \
 		>> "$@"
 	chmod +x "$@"
 
