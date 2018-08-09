@@ -7,6 +7,6 @@ A simple shell script wrapper around multiple package managers
 - [x] apt-get
 
 # Todo
-- [] Autodetect backend
-- [] More support for other distro package managers
-- [] Support for bsd
+- [ ] Autodetect backend
+- [ ] More support for other distro package managers
+- [ ] Support for bsd
