@@ -55,7 +55,7 @@ check_sudo()
         return
     fi
 
-    # Verify that current user is root
+    # Verify that current user isn't root
     #
     if [ "$UID" != "0" ]
     then
