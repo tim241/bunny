@@ -29,8 +29,7 @@ help()
         "$pkg install [package]" \
         "$pkg remove  [package]" \
         "$pkg search  [package]" \
-        "$pkg update" \
-        "$pkg clean"
+        "$pkg update"
 }
 
 get_backend()
@@ -98,12 +97,6 @@ then
 fi
 
 case "$1" in
-    clean)
-        if [ -f "$cache_file" ]
-        then
-            rm "$cache_file"
-            echo "Shoo rabbits, don't make me get a broom!"
-        fi;;
     search|install|\
     remove|update)
         check_sudo "$@"
