@@ -89,7 +89,7 @@ fi
 
 if [ "$backend_found" = "no" ]
 then
-    printf "%s\n\t%s\n\t%s\n" \
+    printf "%s\n%s\n%s\n" \
         "There are no backends compatible with this machine" \
         "You can try to make one for your package manager" \
         "and submit a pr."
