@@ -33,5 +33,5 @@ remove()
 
 update()
 {
-    apt-get update
+    apt-get update && apt-get upgrade
 }
