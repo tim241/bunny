@@ -16,32 +16,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# AUR support
-for aur_backend in "$pkg_backends"/aur/*
-do
-    if command -v "$(basename "$aur_backend")" &> /dev/null
-    then
-        source "$aur_backend"
-        return
-    fi
-done
+NO_SUDO=1
 
 search()
 {
-    pacman -Ss "$@"
+    trizen -Ss "$@"
 }
 
 install()
 {
-    pacman -S "$@"
+    trizen -S "$@"
 }
 
 remove()
 {
-    pacman -R "$@"
+    trizen -R "$@"
 }
 
 update()
 {
-    pacman -Syu
+    trizen -Syu
 }

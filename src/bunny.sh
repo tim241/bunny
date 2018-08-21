@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+NO_SUDO=0
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
 cache_file="$cache_dir/rabbithole"
@@ -55,6 +56,11 @@ check_sudo()
         return
     fi
 
+    # Return when NO_SUDO equals 1
+    if [ "$NO_SUDO" = "1" ]
+    then
+        return
+    fi
     # Verify that current user isn't root
     #
     if [ "$UID" != "0" ]
