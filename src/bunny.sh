@@ -23,6 +23,11 @@ cache_file="$cache_dir/rabbithole"
 
 pkg_backends="@@BACKEND_PATH@@"
 
+if [ "$BUNNY_DEBUG" = "1" ]
+then
+    set -x
+fi
+
 help()
 {
     pkg="$(basename "$0")"
