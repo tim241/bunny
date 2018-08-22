@@ -9,3 +9,4 @@ A simple shell script wrapper around multiple package managers
 - **Void Linux** (xbps)
 - **Debian/Ubuntu/etc** (apt-get)
 - **OpenBSD** (pkg_add/pkg_info/pkg_delete)
+- **NixOS** (supports nix on all distros)
