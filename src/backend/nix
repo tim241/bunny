@@ -23,7 +23,7 @@ search()
 
 install()
 {
-    nix-env -i "$@"
+    nix-env -iA "$@"
 }
 
 remove()
