@@ -3,7 +3,7 @@ prefix  ?= /usr/local
 
 bin/%:
 	mkdir -p bin
-	echo "#!/bin/sh" > "$@"
+	echo "#!/usr/bin/env bash" > "$@"
 	cat src/license_header 	   >> "$@"
 	cat src/bunny.sh \
 		| grep -o '^[^#]*' \
