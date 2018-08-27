@@ -45,7 +45,7 @@ get_backend()
         file_name="$(basename "$file")"
         if command -v "$file_name" &> /dev/null
         then
-            . "$file"
+            source "$file"
             echo "$file_name" > "$cache_file"
             backend_found=yes
         fi
@@ -92,7 +92,7 @@ backend_file="$pkg_backends/$(cat "$cache_file" 2> /dev/null)"
 if [ -f "$cache_file" ] && \
     [ -f "$backend_file" ]
 then
-    . "$backend_file"
+    source "$backend_file"
     backend_found=yes
 else
     get_backend
