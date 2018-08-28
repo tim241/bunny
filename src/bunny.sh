@@ -33,10 +33,11 @@ fi
 help()
 {
     pkg="$(basename "$0")"
-    printf "%s\n%s\n%s\n%s\n" \
+    printf "%s\n%s\n%s\n%s\n%s\n" \
         "$pkg install [package]" \
         "$pkg remove  [package]" \
         "$pkg search  [package]" \
+        "$pkg version" \
         "$pkg update"
 }
 
