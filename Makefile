@@ -1,5 +1,6 @@
 destdir ?= 
 prefix  ?= /usr/local
+version ?= $(shell cat version)
 
 bin/%:
 	mkdir -p bin
@@ -8,6 +9,7 @@ bin/%:
 	cat src/bunny.sh \
 		| grep -o '^[^#]*' \
 		| sed "s|@@BACKEND_PATH@@|$(prefix)/share/bunny/backend|g" \
+		| sed "s|@@BUNNY_VERSION@@|$(version)|g" \
 		>> "$@"
 	chmod +x "$@"
 
