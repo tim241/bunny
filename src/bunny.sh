@@ -18,6 +18,8 @@
 #
 NO_SUDO=0
 
+BUNNY_VERSION="@@BUNNY_VERSION@@"
+
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/bunny"
 cache_file="$cache_dir/rabbithole"
 
@@ -50,6 +52,11 @@ get_backend()
             backend_found=yes
         fi
     done
+}
+
+version()
+{
+    echo "bunny $BUNNY_VERSION"
 }
 
 check_sudo()
@@ -90,8 +97,10 @@ backend_found=no
 backend_file="$pkg_backends/$(cat "$cache_file" 2> /dev/null)"
 
 if [ -f "$cache_file" ] && \
-    [ -f "$backend_file" ]
+    [ -f "$backend_file" ] && \
+    command -v "$(basename "$backend_file")" &> /dev/null
 then
+    
     source "$backend_file"
     backend_found=yes
 else
@@ -121,6 +130,7 @@ case "$1" in
     hop) 
         check_sudo "$@";
         shift; update "$@";;
+    version) version;;
     help|*) help;;
 esac
 
