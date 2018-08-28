@@ -16,6 +16,7 @@ sha256sums=('SKIP')
 
 package() {
     cd "$_pkgname"
-    make install prefix="/usr/" destdir="$pkgdir" -j1
+    version="$(git describe --tags)"
+    make install prefix="/usr/" destdir="$pkgdir" version="$version" -j1 
 }
 
