@@ -37,8 +37,8 @@ help()
         "$pkg install [package]" \
         "$pkg remove  [package]" \
         "$pkg search  [package]" \
-        "$pkg version" \
-        "$pkg update"
+        "$pkg update" \
+        "$pkg version"
 }
 
 get_backend()
