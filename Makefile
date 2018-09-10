@@ -22,5 +22,9 @@ install: bin/bunny
 	cp -r src/backend \
 		"$(destdir)/$(prefix)/share/bunny/"
 
+uninstall:
+	rm -rf "$(destdir)/$(prefix)/bin/bunny" \
+		"$(destdir)/$(prefix)/share/bunny"
+
 clean:
 	rm -rf bin
