@@ -11,3 +11,4 @@ A simple shell script wrapper around multiple package managers
 - **OpenBSD** (pkg_add/pkg_info/pkg_delete)
 - **NixOS** (supports nix on all distros)
 - **Gentoo** (emerge)
+- **GuixSD** (supports guix on all distros)
