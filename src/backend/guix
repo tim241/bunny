@@ -35,5 +35,5 @@ remove()
 
 update()
 {
-    guix pull
+    guix pull && guix package -u
 }
