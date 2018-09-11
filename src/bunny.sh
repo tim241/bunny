@@ -82,7 +82,7 @@ check_sudo()
         then
             doas "$0" "$@"
         else
-            sudo "$0" "$@"
+            sudo -E "$0" "$@"
         fi
         exit $?
     fi
@@ -96,8 +96,15 @@ fi
 backend_found=no
 
 backend_file="$pkg_backends/$(cat "$cache_file" 2> /dev/null)"
+bunny_backend_file="$pkg_backends/$BUNNY_PM"
 
-if [ -f "$cache_file" ] && \
+if [ "$BUNNY_PM" ] && \
+    [ -f "$bunny_backend_file" ] && \
+    command -v "$(basename "$bunny_backend_file")" &> /dev/null
+then
+    source "$bunny_backend_file"
+    backend_found=yes
+elif [ -f "$cache_file" ] && \
     [ -f "$backend_file" ] && \
     command -v "$(basename "$backend_file")" &> /dev/null
 then
